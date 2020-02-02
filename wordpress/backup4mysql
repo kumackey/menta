@@ -1,0 +1,5 @@
+# crontab -eでの設定です
+0 3 * * * root /root/backup4mysql.sh
+
+# crontab確認用に下記コマンドで、バックアップファイルが増えていくことを確認できております。
+# * * * * * root /root/backup4mysql.sh
