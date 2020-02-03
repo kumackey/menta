@@ -1,14 +1,13 @@
-#!bin/sh
+#!/bin/sh
 
-umask 077
+PERIOD=5
+DIRPATH='/root/backup/mysql'
+FILENAME=`date +%y%m%d%H%M`
+ZIPFILENAME="${DIRPATH}/${FILENAME}.sql.gz"
 
-period=31
+mysqldump --opt --all-databases --events --default-character-set=binary -u menta --password="パスワード" | gzip > $ZIPFILENAME
+sudo chmod 700 $ZIPFILENAME
 
-dirpath='/root/backup/mysql'
+OLDFILE=`date --date "$PERIOD days ago" +%y%m%d%H%M`
+rm -f $DIRPATH/$OLDFILE.sql.gz
 
-filename=`date +%y%m%d%H%M`
-
-mysqldump --opt --all-databases --events --default-character-set=binary -u menta --password=“パスワード” | gzip > $dirpath/$filename.sql.gz
-
-oldfile=`date --date "$period days ago" +%y%m%d`
-rm -f $dirpath/$oldfile.sql.gz
