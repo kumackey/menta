@@ -1,0 +1,22 @@
+- name: Create group
+  group:
+    name: kumackey
+    state: present
+  become: yes
+
+- name: Create user
+  user:
+    name: kumackey
+    password: kumackey
+    createhome: yes
+    group: kumackey
+    state: present
+  become: yes
+
+- name: add sudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: kumackey
+    line: "kumackey ALL=(ALL) NOPASSWD: ALL"
+  become: yes
